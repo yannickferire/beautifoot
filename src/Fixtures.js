@@ -6,6 +6,9 @@ class Fixtures extends Component {
     constructor(props) {
         super(props);
         this.API_KEY = "d5e0cd3b07514e8198f0a5741c0837c8";
+        this.API_URL = "http://api.football-data.org/";
+        this.API_VERSION = "v1/";
+        this.API_REQUEST = "fixtures";
         this.state = {
             fixtures: [],
         };
@@ -22,7 +25,7 @@ class Fixtures extends Component {
             cache: 'default' 
         };
 
-        fetch('http://api.football-data.org/v1/fixtures', myOptions)
+        fetch(this.API_URL+this.API_VERSION+this.API_REQUEST, myOptions)
         .then((response) => response.json())
         .then((responseData) => {
             this.setState({
@@ -35,11 +38,11 @@ class Fixtures extends Component {
     render() {
         const { fixtures } = this.state;
         return (
-            <ul>
+            <ul className="fixtures">
                 {fixtures.map(fixture =>
-                <li key={fixture.homeTeamName}>
-                    <h3>{fixture.homeTeamName}</h3>
-                    <h3>{fixture.awayTeamName}</h3>
+                <li className="fixtures--fixture" key={fixture.homeTeamName+'-'+fixture.awayTeamName}>
+                    <h3 className="fixture--home">{fixture.homeTeamName}</h3>
+                    <h3 className="fixture--away">{fixture.awayTeamName}</h3>
                 </li>
                 )}
             </ul>

@@ -1,0 +1,13 @@
+.fixtures {
+    padding: 0; margin: 48px auto;
+    list-style: none;
+}
+.fixtures .fixtures--fixture {
+    margin-bottom: 16px; padding: 4px 24px;
+    background: #ededed;
+    border-radius: 4px;
+}
+.fixtures .fixtures--fixture h3 {
+    display: inline-block;
+}
+.fixtures .fixtures--fixture .fixture--away { float: right; }
