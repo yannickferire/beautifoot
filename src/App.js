@@ -8,7 +8,7 @@ class App extends Component {
         <div className="Header">
           <h1>BeautiFOOT</h1>
         </div>
-        <h2>The best place to see wich is <br/>the most exciting football events today ⚽</h2>
+        <h2>The best place to see wich is <br/>the most excitings football events today ⚽</h2>
       </div>
     );
   }
