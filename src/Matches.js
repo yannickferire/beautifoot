@@ -39,12 +39,20 @@ class Matches extends Component {
 
     render() {
         const { matches } = this.state;
+        const imgPath = 'assets/img/badges/', imgExt = '.png';
         return (
             <ul className="matches">
                 {matches.map(match =>
                 <li className="matches--match" key={match.homeTeam.name+'-'+match.awayTeam.name}>
-                    <h3 className="match--home">{match.homeTeam.name}</h3>&nbsp;vs&nbsp;
-                    <h3 className="match--away">{match.awayTeam.name}</h3>
+                    <h3 className="match--home">
+                        <img className="match--badge home--badge" alt={match.homeTeam.name} src={imgPath+match.homeTeam.id+imgExt} /> 
+                        {match.homeTeam.name}
+                    </h3>
+                    &nbsp;vs&nbsp;
+                    <h3 className="match--away">
+                        <img className="match--badge away--badge" alt={match.awayTeam.name} src={imgPath+match.awayTeam.id+imgExt} /> 
+                        {match.awayTeam.name}
+                    </h3>
                 </li>
                 )}
             </ul>
