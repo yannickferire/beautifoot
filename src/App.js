@@ -4,7 +4,7 @@ import './App.css'
 
 /* IMPORT COMPONENTS */
 import Header from './Header'
-import Fixtures from './Fixtures'
+import Matches from './Matches'
 
 class App extends Component {
   render() {
@@ -12,7 +12,7 @@ class App extends Component {
       <div className="App">
         <Header/>
         <h2>The best place to know wich will be <br/>the most excitings football events today ⚽</h2>
-        <Fixtures/>
+        <Matches/>
       </div>
     );
   }
