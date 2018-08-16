@@ -3,6 +3,7 @@
     list-style: none;
 }
 .matches--match {
+    display: flex;
     margin-bottom: 16px; padding: 10px 24px 8px;
     font-size: 14px;
     background: #ededed;
@@ -10,15 +11,26 @@
 }
 .matches--match h3 {
     display: inline-block;
+    width: 48%;
     margin: 0;
     font-weight: lighter;
     line-height: 24px;
     text-transform: uppercase;
-    vertical-align: middle;
+    vertical-align: baseline;
+}
+.match--home { text-align: right; }
+.match--separator {
+    width: 4%;
+    margin: 0 16px;
+    vertical-align: bottom;
+    line-height: 24px;
+    text-align: center;
 }
 .match--badge {
     max-width: 24px; max-height: 24px;
-    margin: -4px 8px 0 0;
+    margin-top: -4px;
     vertical-align: middle;
 }
+.home--badge { margin-left: 8px; }
+.away--badge { margin-right: 8px; }
 /*.matches .matches--match .match--away { float: right; }*/

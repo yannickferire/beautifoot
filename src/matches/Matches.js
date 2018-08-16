@@ -1,6 +1,11 @@
+/* GENERAL IMPORTS */
 import React, { Component } from 'react'
 
 import './Matches.css'
+
+/* IMPORT COMPONENTS */
+import Team from './Team'
+import TimeScore from './TimeScore'
 
 class Matches extends Component {
     constructor(props) {
@@ -16,16 +21,19 @@ class Matches extends Component {
     }
 
     componentDidMount() {
+        // Headers API Call
         var myHeaders = new Headers();
         myHeaders.append("X-Auth-Token", this.API_KEY);
         myHeaders.append("Content-Type", "text/plain")
         
+        // Options API Call
         var myOptions = { 
             method: 'GET',
             headers: myHeaders,
             cache: 'default' 
         };
 
+        // API call + setState matches
         fetch(this.API_URL+this.API_VERSION+this.API_REQUEST, myOptions)
         .then((response) => response.json())
         .then((responseData) => {
@@ -39,20 +47,23 @@ class Matches extends Component {
 
     render() {
         const { matches } = this.state;
-        const imgPath = 'assets/img/badges/', imgExt = '.png';
+
         return (
             <ul className="matches">
                 {matches.map(match =>
                 <li className="matches--match" key={match.homeTeam.name+'-'+match.awayTeam.name}>
-                    <h3 className="match--home">
-                        <img className="match--badge home--badge" alt={match.homeTeam.name} src={imgPath+match.homeTeam.id+imgExt} /> 
-                        {match.homeTeam.name}
-                    </h3>
-                    &nbsp;vs&nbsp;
-                    <h3 className="match--away">
-                        <img className="match--badge away--badge" alt={match.awayTeam.name} src={imgPath+match.awayTeam.id+imgExt} /> 
-                        {match.awayTeam.name}
-                    </h3>
+                    <Team TeamName={match.homeTeam.name} TeamID={match.homeTeam.id} TeamStatus="home" />
+                    <TimeScore 
+                        MatchStatus={match.status} 
+                        MatchScoreDuration={match.score.duration} 
+                        MatchScoreWinner={match.score.winner}
+                        MatchScoreFTHomeTeam={match.score.fullTime.homeTeam}
+                        MatchScoreFTAwayTeam={match.score.fullTime.awayTeam}
+                        MatchScoreETHomeTeam={match.score.extraTime.homeTeam}
+                        MatchScoreETAwayTeam={match.score.extraTime.awayTeam}
+                        MatchDate={match.utcDate}
+                    />
+                    <Team TeamName={match.awayTeam.name} TeamID={match.awayTeam.id} TeamStatus="away" />
                 </li>
                 )}
             </ul>

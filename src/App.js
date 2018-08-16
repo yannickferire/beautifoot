@@ -1,10 +1,11 @@
 /* GENERAL IMPORTS */
 import React, { Component } from 'react'
+
 import './App.css'
 
 /* IMPORT COMPONENTS */
 import Header from './Header'
-import Matches from './Matches'
+import Matches from './matches/Matches'
 
 class App extends Component {
   render() {
