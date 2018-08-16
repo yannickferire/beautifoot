@@ -2,10 +2,6 @@
 import React, { Component } from 'react'
 
 class Team extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const imgPath = 'assets/img/badges/', imgExt = '.png';
 

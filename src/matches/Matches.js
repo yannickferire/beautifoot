@@ -14,7 +14,7 @@ class Matches extends Component {
         this.API_URL = "http://api.football-data.org/";
         this.API_VERSION = "v2/";
         // 2014 = La Liga | 2015 = Ligue 1 | 2019 = Serie A | 2021 = PremierLeague
-        this.API_REQUEST = "competitions/2021/matches";
+        this.API_REQUEST = "matches?competitions=2021,2014&dateFrom=2018-08-16&dateTo=2018-08-18";
         this.state = {
             matches: [],
         };
@@ -47,12 +47,20 @@ class Matches extends Component {
 
     render() {
         const { matches } = this.state;
+        const imgPath = 'assets/img/badges/', imgExt = '.png';
 
         return (
             <ul className="matches">
                 {matches.map(match =>
                 <li className="matches--match" key={match.homeTeam.name+'-'+match.awayTeam.name}>
-                    <Team TeamName={match.homeTeam.name} TeamID={match.homeTeam.id} TeamStatus="home" />
+                    {/* League • Day */}
+                    <span className="match--league"><img className="league--badge" alt={match.competition.name} src={imgPath+match.competition.name.replace(' ', '_')+imgExt} /></span>
+                    {/* Home Team */}
+                    <Team 
+                        TeamName={match.homeTeam.name} 
+                        TeamID={match.homeTeam.id} 
+                        TeamStatus="home" />
+                    {/* Scheduled Hour or Score if match is finished */}
                     <TimeScore 
                         MatchStatus={match.status} 
                         MatchScoreDuration={match.score.duration} 
@@ -61,9 +69,12 @@ class Matches extends Component {
                         MatchScoreFTAwayTeam={match.score.fullTime.awayTeam}
                         MatchScoreETHomeTeam={match.score.extraTime.homeTeam}
                         MatchScoreETAwayTeam={match.score.extraTime.awayTeam}
-                        MatchDate={match.utcDate}
-                    />
-                    <Team TeamName={match.awayTeam.name} TeamID={match.awayTeam.id} TeamStatus="away" />
+                        MatchDate={match.utcDate} />
+                    {/* Away Team */}
+                    <Team 
+                        TeamName={match.awayTeam.name} 
+                        TeamID={match.awayTeam.id} 
+                        TeamStatus="away" />
                 </li>
                 )}
             </ul>
