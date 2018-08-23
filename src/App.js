@@ -12,7 +12,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header/>
-        <h2>The best place to know wich will be <br/>the most excitings football events today ⚽</h2>
+        <h2>Tell the world wich are <br/>the best potential football events today ⚽</h2>
         <Matches/>
       </div>
     );

@@ -4,6 +4,7 @@
 }
 .matches--match {
     display: flex;
+    position: relative;
     margin-bottom: 16px; padding: 10px 24px 8px;
     font-size: 14px;
     background: #ededed;
@@ -27,6 +28,7 @@
     text-align: center;
 }
 .match--league {
+    position: absolute;
     line-height: 32px;
 }
 .league--badge, 
@@ -37,4 +39,8 @@
 }
 .home--badge { margin-left: 8px; }
 .away--badge { margin-right: 8px; }
-/*.matches .matches--match .match--away { float: right; }*/
+
+.bf--score { 
+    position: absolute; right: 2%;
+    line-height: 32px;
+ }
