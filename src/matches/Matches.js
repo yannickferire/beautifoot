@@ -13,8 +13,8 @@ class Matches extends Component {
         this.API_KEY = "d5e0cd3b07514e8198f0a5741c0837c8";
         this.API_URL = "http://api.football-data.org/";
         this.API_VERSION = "v2/";
-        // 2014 = La Liga | 2015 = Ligue 1 | 2019 = Serie A | 2021 = PremierLeague
-        this.API_REQUEST = "matches?competitions=2021,2014&dateFrom=2018-08-18&dateTo=2018-08-18";
+        // 2014 = LaLiga | 2015 = Ligue 1 | 2019 = Serie A | 2021 = PremierLeague
+        this.API_REQUEST = "matches?competitions=2021,2014&dateFrom=2018-08-23&dateTo=2018-08-25";
         this.state = {
             matches: [],
             competitions: [],
@@ -61,12 +61,32 @@ class Matches extends Component {
     render() {
         const { matches } = this.state;
         const imgPath = 'assets/img/badges/', imgExt = '.png';
+        var fixtures = [], bfScore = 0;
 
-        console.log(this.state);
+        // BF Score for every matches
+        fixtures = matches.map(match => {
+            this.state.competitionsInfos.map(compInfos => 
+                compInfos.competition.id == match.competition.id ? (
+                    bfScore = compInfos.standings[0].table
+                        .filter((standings) => { return standings.team.id == match.homeTeam.id || standings.team.id == match.awayTeam.id })
+                        .map((teamsScore) => { 
+                        /* ( 2 * reverse position in table ) + ( 4 * ( goals for + goals against * 0,6 ) / games played ) */
+                        return ( 3 * (21 - teamsScore.position) ) + ( 6 * (teamsScore.goalsFor + teamsScore.goalsAgainst * 0.6 ) / teamsScore.playedGames) })
+                        .reduce((homeScore, awayScore) => { return Math.round((homeScore + awayScore) * 10) / 10 }, 0)
+                ) : null
+            )
+            match.bfScore = bfScore;
+            return match;
+        })
+        // sort matches by BF Score
+        fixtures.sort(function(a, b) {
+            return b.bfScore - a.bfScore;
+        })
+        
 
         return (
             <ul className="matches">
-                {matches.map(match =>
+                {fixtures.map(match =>
                 <li className="matches--match" key={match.homeTeam.id+'-'+match.awayTeam.id}>
                     {/* League */}
                     <span className="match--league"><img className="league--badge" alt={match.competition.name} src={imgPath+match.competition.name.replace(' ', '_')+imgExt} /></span>
@@ -91,23 +111,9 @@ class Matches extends Component {
                         TeamID={match.awayTeam.id} 
                         TeamStatus="away" />
                     {/* BF Score */}
-                    {   this.state.competitionsInfos[0] ? (
-                        <span className="bf--score">
-                            {
-                                this.state.competitionsInfos.map(compInfos => 
-                                    compInfos.competition.id == match.competition.id ? (
-                                        compInfos.standings[0].table
-                                          .filter((standings) => { return standings.team.id == match.homeTeam.id || standings.team.id == match.awayTeam.id })
-                                          .map((teamsScore) => { 
-                                              /* ( 2 * reverse position in table ) + ( 4 * ( goals for + goals against * 0,6 ) / games played ) */
-                                              return ( 3 * (21 - teamsScore.position) ) + ( 6 * (teamsScore.goalsFor + teamsScore.goalsAgainst * 0.6 ) / teamsScore.playedGames)
-                                          })
-                                          .reduce((acc, bfScore) => { return Math.round((acc + bfScore) * 10) / 10 }, 0)
-                                    ) : null
-                                )
-                            }
-                        </span>
-                        ) : null }
+                    <span className="bf--score">
+                        {match.bfScore}
+                    </span>
                 </li>
                 )}
             </ul>
